@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+//Use of dependency array to prevent repeated renders of component
+
+
+import React from "react";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+
+    const [starWarsData, setStarWarsData] = React.useState({});
+
+    console.log("Component Rendered");
+
+
+    React.useEffect(()=>{
+        fetch("https://swapi.dev/api/people/1")
+            .then(res => res.json())
+            .then(data => setStarWarsData(data))        
+    }, [])
+
+
+
+
+    return(
+        <div> 
+            <pre>{JSON.stringify(starWarsData, null, 2)}</pre>
+        </div>
+    )
 }
 
-export default App;
+export default App
